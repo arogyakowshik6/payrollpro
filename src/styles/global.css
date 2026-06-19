@@ -1,15 +1,12 @@
-/* ============================================================
-   PAYROLLPRO — GLOBAL DESIGN SYSTEM
-   Professional dark theme for HR SaaS portfolio project
-   ============================================================ */
+
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
-/* ── 1. CSS RESET ─────────────────────────────────────────── */
+
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { height: 100%; }
 
-/* ── 2. DESIGN TOKENS ─────────────────────────────────────── */
+
 :root {
   /* Backgrounds */
   --bg-base:       #0d0f14;
