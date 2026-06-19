@@ -1,0 +1,107 @@
+.layout {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 24px;
+  padding: 24px 28px;
+  align-items: start;
+}
+
+/* Left panel */
+.left { display: flex; flex-direction: column; gap: 16px; }
+
+.clockCard {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 28px;
+  text-align: center;
+}
+.clockLabel {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+.clockTime {
+  font-size: 42px;
+  font-weight: 700;
+  letter-spacing: -1.5px;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 6px;
+}
+.clockDate {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+}
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 16px;
+  border-radius: var(--r-full);
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+.statusDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+}
+.in  { background: var(--success-dim); color: var(--success); }
+.out { background: var(--warning-dim); color: var(--warning); }
+
+.sessionTimer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 18px;
+  gap: 3px;
+}
+.timerLabel { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.07em; }
+.timerValue { font-size: 22px; font-weight: 600; font-variant-numeric: tabular-nums; font-family: var(--font-mono); color: var(--accent); }
+
+.clockBtn {
+  width: 100%;
+  padding: 14px;
+  border-radius: var(--r-md);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all var(--t-normal);
+  font-family: var(--font-sans);
+}
+.btnIn  { background: var(--success); color: #fff; }
+.btnIn:hover  { background: #18a866; }
+.btnOut { background: var(--danger); color: #fff; }
+.btnOut:hover { background: #c03535; }
+
+.clockInfo { font-size: 11px; color: var(--text-muted); margin-top: 10px; }
+
+/* Stats row */
+.statsRow { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.miniStat {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: 14px 16px;
+}
+.miniLabel { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text-muted); margin-bottom: 5px; }
+.miniValue { font-size: 20px; font-weight: 700; }
+
+/* Right — shift log */
+.right { min-width: 0; }
+.shiftHeader { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 14px; }
+.shiftTitle  { font-size: 14px; font-weight: 600; }
+.shiftSub    { font-size: 12px; color: var(--text-muted); }
+.shiftTable  { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--r-md); overflow: hidden; }
+
+@media (max-width: 900px) {
+  .layout { grid-template-columns: 1fr; }
+}

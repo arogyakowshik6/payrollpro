@@ -1,0 +1,104 @@
+.sidebar {
+  width: 230px;
+  background: var(--bg-surface);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  flex-shrink: 0;
+}
+
+/* Logo */
+.logo {
+  padding: 0 20px 20px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 16px;
+}
+.logoTitle {
+  font-size: 18px;
+  color: var(--accent);
+  letter-spacing: -0.4px;
+}
+.logoSub {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+/* Nav */
+.sectionLabel {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  padding: 8px 20px 4px;
+}
+.navItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 20px;
+  color: var(--text-secondary);
+  font-size: 13.5px;
+  font-weight: 500;
+  transition: background var(--t-fast), color var(--t-fast);
+  text-decoration: none;
+}
+.navItem:hover { background: var(--bg-hover); color: var(--text-primary); }
+.navItem.active { color: var(--accent); background: var(--accent-glow); }
+
+/* Footer */
+.footer {
+  margin-top: auto;
+  padding: 16px 20px;
+  border-top: 1px solid var(--border);
+}
+.userChip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.avatar.hr  { background: var(--accent-dim); color: var(--accent); }
+.avatar.emp { background: var(--success-dim); color: var(--success); }
+
+.userInfo { flex: 1; min-width: 0; }
+.userName {
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.userRole { font-size: 11px; color: var(--text-muted); }
+
+.logoutBtn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: var(--r-sm);
+  display: flex;
+  transition: color var(--t-fast);
+}
+.logoutBtn:hover { color: var(--danger); }
+
+@media (max-width: 768px) {
+  .sidebar { display: none; }
+}
