@@ -1,8 +1,4 @@
-// ============================================================
-// APP CONTEXT
-// Global state management using React Context + useReducer
-// Covers: auth (RBAC), employees CRUD, attendance log, toasts
-// ============================================================
+
 
 import { createContext, useContext, useReducer, useCallback } from 'react'
 import { INITIAL_EMPLOYEES, INITIAL_ATTENDANCE } from '../data/seedData'

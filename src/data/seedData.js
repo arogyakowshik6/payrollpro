@@ -1,7 +1,3 @@
-// ============================================================
-// DATA MODEL — Employees + Attendance
-// Central data store for the PayrollPro app
-// ============================================================
 
 export const INITIAL_EMPLOYEES = [
   {
