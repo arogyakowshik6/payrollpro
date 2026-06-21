@@ -65,7 +65,6 @@ html { height: 100%; }
   --t-normal: 0.20s ease;
 }
 
-/* ── 3. BASE TYPOGRAPHY ───────────────────────────────────── */
 body {
   font-family: var(--font-sans);
   background:  var(--bg-base);
