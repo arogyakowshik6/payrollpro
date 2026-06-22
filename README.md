@@ -150,7 +150,7 @@ Before you start, make sure you have these installed on your computer:
 ### Option A — Clone with Git (recommended)
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/payrollpro.git
+git clone https://github.com/arogyakowshik6/payrollpro.git
 cd payrollpro
 ```
 
@@ -303,7 +303,7 @@ Node.js isn't installed. Download and install it from [nodejs.org](https://nodej
 
 ## Author
 
-**Koushik Kuppala**
+**Kowshik Kuppala**
 Frontend Developer — React.js · Next.js · TypeScript
 
 - LinkedIn: [linkedin.com/in/YOUR_PROFILE](https://linkedin.com)
