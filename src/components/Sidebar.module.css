@@ -102,3 +102,4 @@
 @media (max-width: 768px) {
   .sidebar { display: none; }
 }
+.navBadge { background:var(--danger); color:#fff; font-size:10px; font-weight:700; padding:1px 6px; border-radius:var(--r-full); min-width:18px; text-align:center; }

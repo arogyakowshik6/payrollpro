@@ -1,0 +1,17 @@
+.page { padding:24px 28px; }
+.grid4 { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+.chartCard { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--r-md); padding:18px 20px; min-width:0; }
+.chartTitle { font-size:13px; font-weight:600; margin-bottom:16px; color:var(--text-secondary); }
+.chart { display:flex; align-items:flex-end; gap:12px; padding-top:8px; overflow-x:auto; }
+.bar { display:flex; flex-direction:column; align-items:center; gap:4px; flex:1; min-width:40px; }
+.barWrap { width:100%; display:flex; align-items:flex-end; }
+.barInner { width:100%; border-radius:var(--r-sm) var(--r-sm) 0 0; min-height:4px; transition:height .4s; }
+.barLabel { font-size:11px; color:var(--text-muted); text-align:center; }
+.barVal   { font-size:11px; font-weight:600; color:var(--text-secondary); text-align:center; }
+.donutWrap { display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
+.legend    { display:flex; flex-direction:column; gap:8px; flex:1; min-width:120px; }
+.legendRow { display:flex; align-items:center; gap:8px; font-size:12px; }
+.legendDot { width:10px; height:10px; border-radius:50%; flex-shrink:0; }
+.legendVal { margin-left:auto; color:var(--text-secondary); font-family:var(--font-mono); }
+@media(max-width:900px){ .grid4{grid-template-columns:1fr 1fr;} .chartCard[style*="span 2"]{grid-column:span 2;} }
+@media(max-width:600px){ .grid4{grid-template-columns:1fr;} .chartCard[style*="span 2"]{grid-column:span 1;} }

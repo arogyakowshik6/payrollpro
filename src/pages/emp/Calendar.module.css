@@ -1,0 +1,13 @@
+.legend { display:flex; align-items:center; gap:8px; margin-bottom:20px; flex-wrap:wrap; }
+.legendItem {}
+.timeline { display:flex; flex-direction:column; gap:12px; }
+.day { display:flex; gap:16px; align-items:flex-start; }
+.dayLabel { width:90px; flex-shrink:0; padding-top:12px; }
+.dayDate  { font-size:12px; font-weight:600; color:var(--text-secondary); }
+.events   { flex:1; display:flex; flex-direction:column; gap:8px; }
+.event    { padding:12px 16px; border-radius:var(--r-md); border-left:3px solid; }
+.eventTitle { font-size:13.5px; font-weight:600; }
+.eventTime  { font-size:12px; color:var(--text-secondary); margin-top:2px; }
+.shift   { background:var(--accent-dim);  border-color:var(--accent); }
+.leave   { background:var(--warning-dim); border-color:var(--warning); }
+.meeting { background:var(--success-dim); border-color:var(--success); }
