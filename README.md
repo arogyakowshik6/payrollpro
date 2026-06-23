@@ -1,8 +1,12 @@
-# PayrollPro — Employee Payroll & Attendance Dashboard
+# PayrollPro — HR Management System
 
-A full-featured HR management web app built with **React 19**. It simulates a real company payroll system with two user roles — an **HR Manager** who manages staff, attendance, and payroll, and an **Employee** who clocks in/out and views their own payslip.
+> A full-featured, enterprise-grade HR and payroll web application built with **React 19**. Simulates a real company payroll system with secure PIN-based authentication, two distinct user roles, and a comprehensive suite of HR tools — built as a portfolio project to demonstrate practical, business-level frontend engineering.
 
-This project was built as a portfolio piece to demonstrate practical, business-level frontend engineering skills — not a toy clone, but a system with real RBAC, state management, routing, and data export.
+![React](https://img.shields.io/badge/React-19.2-61DAFB?logo=react&logoColor=white)
+![React Router](https://img.shields.io/badge/React_Router-7.18-CA4245?logo=react-router&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-8.0-646CFF?logo=vite&logoColor=white)
+![CSS Modules](https://img.shields.io/badge/CSS-Modules-264DE4?logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-ES2022-F7DF1E?logo=javascript&logoColor=black)
 
 ---
 
@@ -10,15 +14,16 @@ This project was built as a portfolio piece to demonstrate practical, business-l
 
 - [What This Project Demonstrates](#what-this-project-demonstrates)
 - [Tech Stack](#tech-stack)
-- [Features](#features)
+- [Full Feature List](#full-feature-list)
 - [Project Structure](#project-structure)
 - [Prerequisites](#prerequisites)
 - [How to Download / Clone](#how-to-download--clone)
 - [How to Run Locally](#how-to-run-locally)
-- [Demo Login Accounts](#demo-login-accounts)
+- [Demo Login Accounts and PINs](#demo-login-accounts-and-pins)
 - [How to Build for Production](#how-to-build-for-production)
 - [How to Deploy](#how-to-deploy)
 - [Payroll Calculation Logic](#payroll-calculation-logic)
+- [Multi-Currency Support](#multi-currency-support)
 - [Available Scripts](#available-scripts)
 - [Troubleshooting](#troubleshooting)
 - [Author](#author)
@@ -29,17 +34,26 @@ This project was built as a portfolio piece to demonstrate practical, business-l
 
 | Skill | Where it shows up |
 |---|---|
-| Role-Based Access Control (RBAC) | Login page + protected routes redirect users based on role |
-| Global state management | `Context API` + `useReducer` (no prop drilling) |
-| Client-side routing | `React Router v7` with protected/guarded routes |
-| Component architecture | Reusable `Button`, `Badge`, `Modal`, `StatCard`, `Toast` components |
-| CSS architecture | CSS Modules — scoped styles, no class name collisions |
-| Real-time UI | Live clock with `setInterval` + proper cleanup in `useEffect` |
-| CRUD operations | Add / edit / remove employees |
-| Data filtering & search | Search and filter on Employees and Attendance pages |
-| File export | Generates and downloads a real `.csv` payroll file using the Blob API |
-| Business logic | UK-style payroll deductions (Income Tax 20% + National Insurance 12%) |
-| Accessibility | Semantic HTML, `aria-*` attributes, keyboard-dismissible modals |
+| **Secure PIN Authentication** | 4-digit PIN numpad on login — no free account switching between employees |
+| **Role-Based Access Control (RBAC)** | Protected routes redirect users by role at the router level |
+| **Global State Management** | `Context API` + `useReducer` — single source of truth, zero prop drilling |
+| **Client-Side Routing** | `React Router v7` — 16 routes, guarded by auth status and user role |
+| **Component Architecture** | Reusable `Button`, `Badge`, `Modal`, `StatCard`, `Toast` with variant-based prop API |
+| **CSS Architecture** | CSS Modules throughout — scoped styles, no class collisions, shared design token system |
+| **Real-Time UI** | Live clock, session timer, elapsed counter — all using `setInterval` with `useEffect` cleanup |
+| **CRUD Operations** | Add / edit / remove employees with modal form and input validation |
+| **Data Filtering and Search** | Multi-field search and dropdown filters across Employees, Attendance, Leave, Shifts |
+| **File Export** | Payroll and performance CSV download via the Blob API |
+| **Business Logic** | UK payroll: 20% income tax + 12% National Insurance, multi-currency conversion |
+| **Data Visualisation** | Bar charts and donut ring in pure SVG — no external chart library |
+| **Leave Management Workflow** | Full request → approve/reject cycle with automatic notification trigger |
+| **Shift Scheduling** | HR assigns shifts; employees see them on their personal calendar |
+| **Performance KPIs** | Punctuality %, overtime, late arrivals — derived from live attendance data |
+| **Notifications System** | Role-targeted alerts, unread badge counter, mark-as-read |
+| **Multi-Currency Payroll** | GBP / USD / EUR / INR with mock exchange rates and dual-currency payslips |
+| **Payslip History** | Employees can browse and view all past monthly payslips |
+| **Self-Service Portal** | Employees update their own personal details independently |
+| **Accessibility** | Semantic HTML, `aria-*` attributes, keyboard-dismissible modals |
 
 ---
 
@@ -48,33 +62,55 @@ This project was built as a portfolio piece to demonstrate practical, business-l
 | Category | Technology | Version |
 |---|---|---|
 | UI Library | [React](https://react.dev) | 19.2 |
-| Routing | [React Router](https://reactrouter.com) | 7.18 |
+| Routing | [React Router DOM](https://reactrouter.com) | 7.18 |
 | Build Tool | [Vite](https://vitejs.dev) | 8.0 |
-| Styling | CSS Modules (vanilla CSS, no framework) | — |
+| Styling | CSS Modules — vanilla CSS, no framework | — |
 | Linting | ESLint | 10.3 |
 | Package Manager | npm | 9+ |
 | Language | JavaScript (JSX) | ES2022+ |
+| Charts | Pure SVG — no chart library | — |
+| Icons | Inline SVG — no icon library | — |
+| Fonts | Google Fonts — Inter + JetBrains Mono | — |
 
-No UI component library (no MUI/Bootstrap/Tailwind) is used — every component, including the design system (colors, spacing, typography tokens), was built from scratch in `src/styles/global.css`.
+> No UI component library is used anywhere. Every component — the design system, color tokens, spacing, typography, charts, and all interactive elements — was built from scratch.
 
 ---
 
-## Features
+## Full Feature List
 
-### HR Manager view
-- **Overview** — live KPI cards: total employees, total hours, gross payroll, net payroll
-- **Employees** — add, edit, and remove staff; search by name/email; filter by department
-- **Attendance Log** — every clock-in/out record; search by name, filter by month
-- **Payroll** — automatic tax/NI deduction calculations per employee, monthly totals, and **one-click CSV export**
+### HR Manager — 9 pages
 
-### Employee view
-- **Clock In / Out** — live ticking clock, session timer, one-tap clock-in/out that writes directly to the attendance log
-- **My Payslip** — auto-generated payslip showing hours worked, gross pay, tax, NI, and net pay
+| Page | What it does |
+|---|---|
+| **Overview** | KPI stat cards: total employees, total hours, gross payroll, net payroll. Employee summary table with hours and earnings per person. |
+| **Employees** | Add, edit, and remove staff. Search by name or email. Filter by department. Full modal form with validation. |
+| **Attendance Log** | All clock-in/out records across all employees. Search by name, filter by month. Late arrival flagged visually. |
+| **Payroll** | Monthly payroll with automatic tax (20%) and NI (12%) per employee. Multi-currency local pay column. One-click CSV export. |
+| **Leave Management** | View all leave requests (Annual / Sick / Unpaid). Approve or reject with one click. Status tabs. Auto-fires employee notification on action. |
+| **Shift Scheduling** | Assign shifts (Early / Morning / Late / Night) per employee and date. Remove shifts. Auto-fires employee notification on assignment. |
+| **Performance** | KPI card per employee: punctuality %, days worked, late arrivals, overtime hours, leaves taken. Progress bar visuals. Export as CSV. |
+| **Analytics** | Five charts: payroll by employee (bar), attendance days (bar), monthly payroll trend (bar), departmental cost breakdown (SVG donut), late arrivals (bar). All pure SVG, no library. |
+| **Notifications** | HR-targeted alerts for leave requests and system events. Unread count badge in sidebar. Mark individual or all as read. |
 
-### Shared
-- Toast notifications for every action (add employee, clock in, export CSV, errors, etc.)
-- Fully responsive layout (sidebar collapses on smaller screens)
-- Protected routes — employees can't access HR pages and vice versa, even by typing the URL directly
+### Employee — 7 pages
+
+| Page | What it does |
+|---|---|
+| **Clock In / Out** | Live clock, one-tap toggle. Real-time session duration counter. Clock-out auto-calculates hours and logs a new attendance record. Monthly stats. |
+| **Request Leave** | Submit Annual / Sick / Unpaid leave with date range picker and automatic duration calculator. Leave history with approval status. Fires HR notification on submit. |
+| **My Calendar** | Timeline of all shifts and leave events assigned/approved by HR — simulates Google Calendar integration. Colour-coded by type. |
+| **My Payslip** | Current month payslip: hours worked, hourly rate, gross pay, income tax, NI deduction, net pay. Dual-currency if employee uses non-GBP currency. |
+| **Payslip History** | Month selector sidebar showing all available payslips. Click any month to view the full dual-currency breakdown. |
+| **My Profile** | Edit name, email, phone, and address. Employment details (rate, department, job title) shown as read-only — HR-managed only. |
+| **Notifications** | Employee-targeted alerts: leave approved/rejected, new shift assigned, payslip ready. Mark as read. |
+
+### System-wide
+
+- **PIN Authentication** — 4-digit numpad, masked dot display, shake animation + error message on wrong PIN
+- **RBAC Route Protection** — 16 routes guarded by both login status and role; wrong-role attempts redirect automatically
+- **Toast Notifications** — action feedback on every interaction: clock in/out, leave submitted, employee added, CSV exported, errors
+- **Responsive Layout** — sidebar collapses on smaller viewports
+- **Design System** — CSS custom properties for all colours, spacing, radius, typography, and transitions
 
 ---
 
@@ -82,66 +118,100 @@ No UI component library (no MUI/Bootstrap/Tailwind) is used — every component,
 
 ```
 payrollpro/
-├── index.html                     # HTML entry point
-├── package.json                   # Dependencies + scripts
-├── vite.config.js                 # Vite configuration
-├── eslint.config.js               # Linting rules
+├── index.html                           # HTML entry point (single-page app shell)
+├── package.json                         # Dependencies and npm scripts
+├── vite.config.js                       # Vite build configuration
+├── eslint.config.js                     # ESLint rules
 │
-├── public/                        # Static assets
+├── public/                              # Static assets served as-is
 │
 └── src/
-    ├── main.jsx                   # React app entry — mounts <App /> with BrowserRouter
-    ├── App.jsx                    # Top-level router, protected routes, dashboard layout
-    ├── App.module.css             # Layout shell styling
+    ├── main.jsx                         # React root — mounts <App /> inside <BrowserRouter />
+    ├── App.jsx                          # All 16 routes, protected route wrappers, dashboard shell
+    ├── App.module.css                   # Dashboard layout: sidebar + topbar + content area
     │
-    ├── context/
-    │   └── AppContext.jsx         # Global state: auth, employees, attendance, toasts (useReducer)
-    │
-    ├── data/
-    │   └── seedData.js            # Seed/demo data: employees, attendance records, demo users
-    │
-    ├── utils.js                   # Pay calculations, currency/date formatting, CSV generator
+    ├── utils.js                         # Pay calculations, currency conversion, CSV generation,
+    │                                    # date/time formatting, performance calculation
     │
     ├── styles/
-    │   └── global.css             # Design tokens — colors, spacing, typography (CSS variables)
+    │   └── global.css                   # Design token system — CSS custom properties for colours,
+    │                                    # spacing scale, border radius, typography, transitions
+    │
+    ├── data/
+    │   └── seedData.js                  # All demo data: employees, attendance records, leave requests,
+    │                                    # shifts, notifications, calendar events, payslip history,
+    │                                    # exchange rates, demo users with PINs
+    │
+    ├── context/
+    │   └── AppContext.jsx               # Global state — Context API + useReducer.
+    │                                    # State: auth, employees, attendance, leaves, shifts,
+    │                                    # notifications, calendar events, payslip history, toast, clock.
+    │                                    # Exports helper functions: getHoursForEmp,
+    │                                    # getUserNotifications, getShiftsForEmp
     │
     ├── components/
-    │   ├── Sidebar.jsx            # Role-aware navigation sidebar
-    │   ├── Sidebar.module.css
-    │   └── ui/                    # Reusable UI primitives
-    │       ├── Button.jsx / .module.css
-    │       ├── Badge.jsx / .module.css
-    │       ├── StatCard.jsx / .module.css
-    │       ├── Modal.jsx / .module.css
-    │       └── Toast.jsx / .module.css
+    │   ├── Sidebar.jsx                  # Role-aware navigation — separate links for HR and Employee.
+    │   ├── Sidebar.module.css           # Includes unread notification badge counter.
+    │   │
+    │   └── ui/                          # Reusable primitive components
+    │       ├── Button.jsx               # variants: default | primary | success | danger
+    │       ├── Button.module.css        # sizes: sm | md | lg | fullWidth
+    │       ├── Badge.jsx                # Status pill: accent | success | warning | danger | muted
+    │       ├── Badge.module.css
+    │       ├── StatCard.jsx             # KPI metric card with label, large value, sub-text
+    │       ├── StatCard.module.css      # valueColor: accent | success | warning | danger
+    │       ├── Modal.jsx                # Controlled modal: Escape key + overlay click to close
+    │       ├── Modal.module.css         # Slide-up and fade-in animation
+    │       ├── Toast.jsx                # Auto-dismissing toast (3.2s), reads from global state
+    │       └── Toast.module.css
     │
     └── pages/
-        ├── Login.jsx               # Role selection + sign-in (RBAC entry point)
-        ├── Login.module.css
-        ├── Overview.jsx            # HR — dashboard summary
-        ├── Employees.jsx           # HR — employee CRUD table
-        ├── Attendance.jsx          # HR — attendance log table
-        ├── Payroll.jsx             # HR — payroll table + CSV export
-        ├── ClockPage.jsx           # Employee — clock in/out + shift log
+        │
+        ├── Login.jsx                    # Role selector + account picker + 4-digit PIN numpad
+        ├── Login.module.css             # Shake animation on wrong PIN, masked dot indicators
+        │
+        ├── Overview.jsx                 # HR: KPI cards and employee summary table
+        ├── Employees.jsx                # HR: CRUD table, add/edit modal, search, filter
+        ├── Attendance.jsx               # HR: All attendance records, search and month filter
+        ├── Payroll.jsx                  # HR: Monthly payroll, multi-currency column, CSV export
+        ├── ClockPage.jsx                # Employee: Clock in/out, session timer, shift log
         ├── Clock.module.css
-        ├── Payslip.jsx             # Employee — payslip view
+        ├── Payslip.jsx                  # Employee: Current month payslip, dual-currency
         ├── Payslip.module.css
-        └── Pages.module.css        # Shared table/filter-bar styling across HR pages
+        ├── Pages.module.css             # Shared: tables, filter bars, form grids, tab buttons,
+        │                                # employee avatar cells, action button groups
+        │
+        ├── hr/                          # HR Manager exclusive pages
+        │   ├── LeaveManagement.jsx      # Leave queue: approve/reject, status filter tabs
+        │   ├── ShiftScheduling.jsx      # Assign/remove shifts, search by employee
+        │   ├── Performance.jsx          # KPI cards + table + progress bars, CSV export
+        │   ├── Performance.module.css
+        │   ├── Analytics.jsx            # 5 pure SVG charts: bar charts + donut ring chart
+        │   ├── Analytics.module.css
+        │   ├── Notifications.jsx        # HR notification feed, mark as read
+        │   └── Notifications.module.css
+        │
+        └── emp/                         # Employee exclusive pages
+            ├── LeaveRequest.jsx         # Leave submission form + personal leave history
+            ├── Calendar.jsx             # Timeline view: shifts, leave, meetings
+            ├── Calendar.module.css
+            ├── PayslipHistory.jsx       # Month selector + full payslip for selected month
+            └── SelfService.jsx          # Edit personal details, read-only employment info
 ```
 
 ---
 
 ## Prerequisites
 
-Before you start, make sure you have these installed on your computer:
+Before you start, make sure the following tools are installed on your computer:
 
-| Tool | Minimum Version | Check with | Download |
+| Tool | Minimum Version | How to check | Where to download |
 |---|---|---|---|
-| Node.js | 18.x or higher | `node -v` | [nodejs.org](https://nodejs.org) |
-| npm | 9.x or higher (comes with Node.js) | `npm -v` | included with Node.js |
-| Git | any recent version | `git -v` | [git-scm.com](https://git-scm.com) |
+| **Node.js** | 18.x or higher | `node -v` | [nodejs.org](https://nodejs.org) |
+| **npm** | 9.x or higher | `npm -v` | Included with Node.js — no separate install |
+| **Git** | Any recent version | `git --version` | [git-scm.com](https://git-scm.com) |
 
-> If `node -v` or `npm -v` returns "command not found," install Node.js from the link above — npm comes bundled with it.
+> **Not sure if you have Node.js?** Open a terminal and run `node -v`. If you see "command not found", install Node.js from [nodejs.org](https://nodejs.org) — npm comes bundled with it automatically. After installing, close and reopen your terminal.
 
 ---
 
@@ -156,27 +226,33 @@ cd payrollpro
 
 ### Option B — Download as ZIP (no Git required)
 
-1. Go to the GitHub repository page
-2. Click the green **Code** button
+1. Go to the repository page on GitHub
+2. Click the green **`< > Code`** button near the top right
 3. Click **Download ZIP**
-4. Extract the ZIP file anywhere on your computer
-5. Open a terminal and `cd` into the extracted `payrollpro` folder
+4. Find the ZIP in your Downloads folder and extract it:
+   - **Windows:** Right-click → Extract All
+   - **Mac:** Double-click the ZIP file
+5. Open your terminal and navigate into the extracted folder:
+
+```bash
+cd payrollpro
+```
 
 ---
 
 ## How to Run Locally
 
-Once you're inside the project folder (`cd payrollpro`):
+Once you are inside the project folder, run these two commands in order:
 
 ```bash
-# Step 1 — Install all dependencies
+# Step 1 — Install all dependencies (only needed once after cloning)
 npm install
 
-# Step 2 — Start the local development server
+# Step 2 — Start the development server
 npm run dev
 ```
 
-After running `npm run dev`, your terminal will show something like:
+Your terminal will display something like this:
 
 ```
   VITE v8.0.12  ready in 320 ms
@@ -185,37 +261,39 @@ After running `npm run dev`, your terminal will show something like:
   ➜  Network: use --host to expose
 ```
 
-Open **http://localhost:5173** in your browser — the app will load with hot-reload enabled (any code change refreshes the browser automatically).
+Open **http://localhost:5173** in your browser. The app will load instantly and any code change you make will refresh the browser automatically (hot module replacement — no manual refreshing needed).
 
 To stop the server, press `Ctrl + C` in the terminal.
 
 ---
 
-## Demo Login Accounts
+## Demo Login Accounts and PINs
 
-The app uses simulated/demo accounts — no real backend or database, no signup needed. Just pick a role and account on the login screen:
+The app uses demo accounts with no real backend, no database, and no signup required. On the login screen, select your role and account, then enter the 4-digit PIN on the numpad.
 
-| Name | Role | What they can access |
-|---|---|---|
-| Sarah Johnson | HR Manager | Overview, Employees, Attendance, Payroll |
-| James Carter | Employee | Clock In/Out, My Payslip |
-| Priya Patel | Employee | Clock In/Out, My Payslip |
-| Marcus Brown | Employee | Clock In/Out, My Payslip |
-| Aisha Khan | Employee | Clock In/Out, My Payslip |
+| Name | Role | PIN | Pages accessible |
+|---|---|---|---|
+| **Sarah Johnson** | HR Manager | `0000` | Overview, Employees, Attendance, Payroll, Leave Management, Shift Scheduling, Performance, Analytics, Notifications |
+| **James Carter** | Employee | `1234` | Clock In/Out, Request Leave, My Calendar, My Payslip, Payslip History, My Profile, Notifications |
+| **Priya Patel** | Employee | `2345` | Clock In/Out, Request Leave, My Calendar, My Payslip, Payslip History, My Profile, Notifications |
+| **Marcus Brown** | Employee | `3456` | Clock In/Out, Request Leave, My Calendar, My Payslip, Payslip History, My Profile, Notifications |
+| **Aisha Khan** | Employee | `4567` | Clock In/Out, Request Leave, My Calendar, My Payslip, Payslip History, My Profile, Notifications |
 
-All data resets when you refresh the page, since it's stored in memory (React state) rather than a database — this is intentional for a portfolio/demo project.
+**Security note:** The PIN system prevents any user from logging into another employee's account. A wrong PIN triggers an error message and shake animation — the account does not open. This addresses a real trust and data integrity requirement in attendance management systems.
+
+**Data note:** All data resets on page refresh because it lives in React state rather than a database. This is intentional for a portfolio and demo project.
 
 ---
 
 ## How to Build for Production
 
-To create an optimized, production-ready build:
+To generate a minified, optimised production build:
 
 ```bash
 npm run build
 ```
 
-This generates a `dist/` folder containing static HTML/CSS/JS files ready to be hosted anywhere.
+This creates a `dist/` folder in the project root containing static HTML, CSS, and JavaScript files — ready to deploy to any hosting platform.
 
 To preview the production build locally before deploying:
 
@@ -227,91 +305,189 @@ npm run preview
 
 ## How to Deploy
 
-### Deploy to Vercel (recommended — free, fastest)
+### Option 1 — Vercel (recommended — free, fastest, zero config)
 
 ```bash
+# Install the Vercel CLI
 npm install -g vercel
+
+# Log in to Vercel (opens your browser)
 vercel login
+
+# Deploy from inside the project folder
 vercel
 ```
 
-Follow the prompts — Vercel auto-detects Vite and configures everything.
+Vercel auto-detects Vite and configures everything. Your app will be live at a `.vercel.app` URL within a minute.
 
-### Deploy to Netlify
+---
 
-1. Push your code to GitHub
-2. Go to [netlify.com](https://netlify.com) → **Add new site** → **Import an existing project**
-3. Connect your GitHub repo
-4. Set build command: `npm run build`
-5. Set publish directory: `dist`
-6. Click **Deploy**
+### Option 2 — Netlify
 
-### Deploy to GitHub Pages
+1. Push your project to a GitHub repository
+2. Go to [netlify.com](https://netlify.com) and sign in
+3. Click **Add new site** → **Import an existing project**
+4. Connect your GitHub account and select this repository
+5. Set the build settings:
+   - **Build command:** `npm run build`
+   - **Publish directory:** `dist`
+6. Click **Deploy site**
+
+Your site will be live at a `.netlify.app` URL within a couple of minutes.
+
+> For client-side routing to work correctly on Netlify, create a file at `public/_redirects` with this content:
+> ```
+> /*    /index.html   200
+> ```
+
+---
+
+### Option 3 — GitHub Pages
 
 ```bash
+# Build the app
 npm run build
+
+# Install the deployment tool
 npm install -g gh-pages
+
+# Deploy the dist folder
 gh-pages -d dist
 ```
+
+Then go to your repository on GitHub → **Settings** → **Pages** → set the source branch to `gh-pages`.
+
+> **Important for GitHub Pages:** Before building, add `base: '/your-repo-name/'` to `vite.config.js`, replacing `your-repo-name` with your actual repository name. This is required so that assets load correctly from the subdirectory path GitHub Pages uses.
 
 ---
 
 ## Payroll Calculation Logic
 
-Every payslip and payroll row uses this formula (`src/utils.js`):
+Every payslip, payroll table row, and analytics chart uses the same calculation function in `src/utils.js`:
 
 ```js
-const gross = hoursWorked * hourlyRate
-const tax   = gross * 0.20   // 20% Income Tax
-const ni    = gross * 0.12   // 12% National Insurance
-const net   = gross - tax - ni
+// src/utils.js
+
+const TAX_RATE = 0.20   // 20% UK Income Tax
+const NI_RATE  = 0.12   // 12% National Insurance
+
+function calcPay(hoursWorked, hourlyRate, currency = 'GBP') {
+  const gross = hoursWorked * hourlyRate
+  const tax   = gross * TAX_RATE
+  const ni    = gross * NI_RATE
+  const net   = gross - tax - ni
+
+  const grossConv = convertCurrency(gross, currency)  // employee's local currency
+  const netConv   = convertCurrency(net, currency)
+
+  return { gross, tax, ni, net, hours: hoursWorked, grossConv, netConv, currency }
+}
 ```
+
+---
+
+## Multi-Currency Support
+
+Each employee has a preferred currency in their profile. The payroll system converts GBP values using mock exchange rates defined in `src/data/seedData.js`:
+
+```js
+// Mock exchange rates — base currency: GBP
+export const EXCHANGE_RATES = {
+  GBP: 1.0,
+  USD: 1.27,
+  EUR: 1.17,
+  INR: 105.4,
+}
+```
+
+**Where multi-currency appears across the app:**
+
+| Location | What it shows |
+|---|---|
+| Payroll table | "Net (Local)" column — each employee's net in their own currency |
+| My Payslip | Gross and net in both GBP and employee's preferred currency |
+| Payslip History | Every historical payslip with dual-currency values |
+| CSV export | Includes hourly rate, gross (GBP), and net (local) columns |
+
+Demo currency assignments: James → GBP · Priya → GBP · Marcus → EUR · Aisha → USD
 
 ---
 
 ## Available Scripts
 
+Run all commands from inside the project folder:
+
 | Command | What it does |
 |---|---|
-| `npm install` | Installs all project dependencies |
-| `npm run dev` | Starts the local dev server with hot reload |
-| `npm run build` | Builds an optimized production bundle into `/dist` |
-| `npm run preview` | Serves the production build locally to test before deploying |
-| `npm run lint` | Runs ESLint to check code quality |
+| `npm install` | Downloads and installs all project dependencies into `node_modules/` |
+| `npm run dev` | Starts the Vite development server with hot reload at `http://localhost:5173` |
+| `npm run build` | Creates an optimised production build in the `dist/` folder |
+| `npm run preview` | Serves the `dist/` folder locally so you can test the production version |
+| `npm run lint` | Runs ESLint to check for code quality issues across all source files |
 
 ---
 
 ## Troubleshooting
 
-**`npm install` fails or hangs**
-Delete `node_modules` and `package-lock.json`, then try again:
+**`npm install` fails, hangs, or shows errors**
+
+Delete the existing `node_modules` folder and lock file, then retry from scratch:
 ```bash
 rm -rf node_modules package-lock.json
 npm install
 ```
 
-**Port 5173 already in use**
-Vite will automatically try the next available port (5174, 5175, etc.) — check your terminal output for the actual URL.
+---
 
-**Blank white page after `npm run dev`**
-Open your browser's developer console (F12) and check for errors — usually a missing dependency. Re-run `npm install`.
+**Port 5173 is already in use**
 
-**"command not found: npm"**
-Node.js isn't installed. Download and install it from [nodejs.org](https://nodejs.org), then restart your terminal.
+Vite automatically tries the next available port (5174, 5175, and so on). Check your terminal output — it will tell you the exact URL it is using.
+
+---
+
+**The app shows a blank white page after `npm run dev`**
+
+Open your browser's developer console:
+- **Windows / Linux:** Press `F12`
+- **Mac:** Press `Cmd + Option + I`
+
+Look at the **Console** tab for red error messages. The most common cause is a missing dependency — re-running `npm install` fixes it in most cases.
+
+---
+
+**"command not found: npm" or "command not found: node"**
+
+Node.js is not installed. Download the LTS version from [nodejs.org](https://nodejs.org), run the installer, then close and reopen your terminal before trying again.
+
+---
+
+**Deployed app shows blank page or broken links when navigating directly to a URL**
+
+This is a single-page app routing issue. The server needs to serve `index.html` for all routes.
+
+- **Vercel:** Handled automatically — no action needed.
+- **Netlify:** Create `public/_redirects` containing `/*    /index.html   200`
+- **GitHub Pages:** Requires a `404.html` redirect workaround — search "GitHub Pages SPA redirect" for instructions.
+
+---
+
+**All my data disappeared after refreshing the page**
+
+This is expected behaviour. All data is stored in React state (in memory) — there is no backend or database. Refreshing the page resets everything back to the seed data defined in `src/data/seedData.js`. This is intentional for a portfolio and demo project.
 
 ---
 
 ## Author
 
 **Kowshik Kuppala**
-Frontend Developer — React.js · Next.js · TypeScript
+Frontend Developer — React.js · TypeScript · Next.js
 
 - LinkedIn: [linkedin.com/in/YOUR_PROFILE](https://linkedin.com)
-- Portfolio: [your-portfolio-link.vercel.app](https://vercel.com)
-- GitHub: [github.com/YOUR_USERNAME](https://github.com)
+- Portfolio: [your-portfolio.vercel.app](https://vercel.com)
+- GitHub: [github.com/arogyakowshik6](https://github.com/arogyakowshik6)
 
 ---
 
 ## License
 
-This project is open source and available for portfolio/educational use.
+This project is open source and free to use for portfolio and educational purposes.
